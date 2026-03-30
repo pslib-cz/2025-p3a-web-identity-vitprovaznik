@@ -1,40 +1,33 @@
 ﻿@page
 @model CoffeeRecordsIdentity.Pages.CreateModel
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Přidat kávu";
 }
 
-<h1>Create</h1>
+<h1>Přidat záznam o kávě</h1>
 
-<h4>CoffeeCup</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Input.UserName" class="control-label"></label>
-                <input asp-for="Input.UserName" class="form-control" />
-                <span asp-validation-for="Input.UserName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.MachineNo" class="control-label"></label>
+
+            <div class="form-group mb-3">
+                <label asp-for="Input.MachineNo" class="control-label">Číslo kávovaru</label>
                 <input asp-for="Input.MachineNo" class="form-control" />
                 <span asp-validation-for="Input.MachineNo" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Přidat" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="Index">Back to List</a>
+    <a asp-page="./Index">Zpět na seznam</a>
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    <partial name="_ValidationScriptsPartial" />
 }

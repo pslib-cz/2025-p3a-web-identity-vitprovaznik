@@ -1,0 +1,29 @@
+﻿@page
+@model CoffeeRecordsIdentity.Pages.Admin.UsersModel
+@{
+    ViewData["Title"] = "Uživatelé";
+}
+
+<h1>Seznam učitelů (Admin)</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>E-mail</th>
+            <th>Jméno</th>
+            <th>Akce</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.AppUsers)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Name</td>
+                <td>
+                    <a asp-page="./UserCups" asp-route-userId="@user.Id" class="btn btn-sm btn-info">Zobrazit kávu</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

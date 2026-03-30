@@ -1,15 +1,24 @@
 using CoffeeRecordsIdentity.Data;
 using CoffeeRecordsIdentity.InputModels;
 using CoffeeRecordsIdentity.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CoffeeRecordsIdentity.Pages
 {
-    public class CreateModel(ILogger<CreateModel> logger, ApplicationDbContext context) : PageModel
+    [Authorize]
+    public class CreateModel : PageModel
     {
-        private readonly ILogger<CreateModel> _logger = logger;
-        private readonly ApplicationDbContext _context = context;
+        private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public CreateModel(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        {
+            _context = context;
+            _userManager = userManager;
+        }
 
         [BindProperty]
         public CoffeeCupIM Input { get; set; } = new();
@@ -18,17 +27,29 @@ namespace CoffeeRecordsIdentity.Pages
         {
             return Page();
         }
+
         public async Task<IActionResult> OnPostAsync()
         {
-            _logger.LogInformation("OnPostAsync called with MachineNo: {MachineNo} and UserName: {UserName}", Input.MachineNo, Input.UserName);
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid == false)
             {
                 return Page();
             }
-            CoffeeCup cc = new CoffeeCup { MachineNo = Input.MachineNo, UserName = Input.UserName, Created = DateTime.Now };
-            _context.Cups.Add(cc);
+
+            ApplicationUser prihlasenyUzivatel = await _userManager.GetUserAsync(User);
+            
+            if (prihlasenyUzivatel == null)
+            {
+                return Challenge();
+            }
+
+            CoffeeCup novySalek = new CoffeeCup();
+            novySalek.MachineNo = Input.MachineNo;
+            novySalek.UserName = prihlasenyUzivatel.UserName; 
+            novySalek.UserId = prihlasenyUzivatel.Id; 
+            novySalek.Created = DateTime.Now;
+
+            _context.Cups.Add(novySalek);
             await _context.SaveChangesAsync();
-            _logger.LogInformation("CoffeeCup created with Id: {CoffeeCupId}", cc.CoffeeCupId);
 
             return RedirectToPage("./Index");
         }

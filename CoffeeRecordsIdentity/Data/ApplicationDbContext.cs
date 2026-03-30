@@ -1,9 +1,10 @@
 ﻿using CoffeeRecordsIdentity.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CoffeeRecordsIdentity.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<CoffeeCup> Cups { get; set; }
 

@@ -7,18 +7,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\**" />
+    <Compile Remove="Pages\NováSložka\**" />
+    <Content Remove="Areas\**" />
+    <Content Remove="Pages\NováSložka\**" />
+    <EmbeddedResource Remove="Areas\**" />
+    <EmbeddedResource Remove="Pages\NováSložka\**" />
+    <None Remove="Areas\**" />
+    <None Remove="Pages\NováSložka\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.14" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.14">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="CoffeeRecords.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.12" />
   </ItemGroup>
 
 </Project>
